@@ -3,7 +3,7 @@ import { FC } from "react";
 
 const Summary: FC = () => {
   return (
-    <Card sx={{ p: 1 }}>
+    <Card sx={{ p: 2 }}>
       <Typography variant="subtitle2" component="p">
         Liczba godzin przepracowanych w bieżącym okresie:
       </Typography>

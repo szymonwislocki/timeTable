@@ -11,7 +11,7 @@ const Schedule: FC = () => {
         8:00 – 16:00
       </Typography>
       <Typography variant="subtitle2" component="span">
-        <CalendarMonthIcon sx={{ fontSize: 12 }} /> 01-01-2023 <AccessTimeIcon sx={{ fontSize: 12 }} /> 8 godzin – <PaidIcon sx={{ fontSize: 12 }} /> 400 PLN
+        <CalendarMonthIcon sx={{ fontSize: 12 }} /> 01-01-2023 <AccessTimeIcon sx={{ fontSize: 12 }} /> 8 h – <PaidIcon sx={{ fontSize: 12 }} /> 400 PLN
       </Typography>
     </Card>
   );
