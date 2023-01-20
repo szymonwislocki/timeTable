@@ -16,7 +16,7 @@ const Settings: React.FC<SimpleDialogProps> = ({ open, setOpen }) => {
   return (
     <Dialog open={open} onClose={setOpen}>
       <Box sx={{ p: 1.5, display: "flex", flexDirection: "column", gap: 1 }}>
-        <DialogTitle>Ustawienia</DialogTitle>
+        <DialogTitle sx={{ p: 0 }}>Ustawienia</DialogTitle>
         <TextField label="Waluta" />
         <TextField label="Stawka godzinowa" />
         <Button variant="outlined" color="error">

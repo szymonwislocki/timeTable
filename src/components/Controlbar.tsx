@@ -11,7 +11,7 @@ const Controlbar: FC = () => {
     <AppBar sx={{ m: -1, width: "100vw" }} position="static">
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Cześć, {"name"}
+          TimeTable
         </Typography>
         <Button color="inherit" variant="outlined">
           <LoginIcon />
