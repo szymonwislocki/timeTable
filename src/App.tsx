@@ -3,16 +3,32 @@ import Add from "./components/Add";
 import Controlbar from "./components/Controlbar";
 import MainScreen from "./components/MainScreen";
 import Dialog from "@mui/material/Dialog";
-import { FormEvent, useState } from "react";
-import { Box, Button, DialogTitle, TextField, Typography } from "@mui/material";
+import { FormEvent, useContext, useEffect, useState } from "react";
+import { Backdrop, Box, Button, CircularProgress, DialogTitle, TextField, Typography } from "@mui/material";
 import Login from "./components/Login";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase";
+import { AuthContext } from "./providers/auth";
 
 function App() {
-  const [user, setUser] = useState<null | string>(null);
+  const { user, setUser } = useContext(AuthContext);
+
+  const [loader, setLoader] = useState(true);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (u) => {
+      u ? setUser(u.email) : setUser(null);
+      setLoader(false);
+    });
+    console.log("Effect fired");
+  }, [user]);
 
   return (
     <>
-      <Login open={!Boolean(user)} setUser={setUser} />
+      <Backdrop sx={{ color: "#fff", zIndex: 2 }} open={loader}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+      <Login open={!Boolean(user) && !loader} />
       <Controlbar />
       <MainScreen />
       <Add />

@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import Dialog from "@mui/material/Dialog";
 import { FormEvent, useState } from "react";
 import { Alert, Box, Button, DialogTitle, IconButton, TextField, Typography } from "@mui/material";
@@ -7,10 +7,10 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { AccountCircleSharp } from "@mui/icons-material";
 import { auth } from "../firebase";
 import CloseIcon from "@mui/icons-material/Close";
+import { AuthContext } from "../providers/auth";
 
 interface Props {
   open: boolean;
-  setUser: (v: string) => void;
 }
 
 interface LoginForm extends HTMLFormControlsCollection {
@@ -19,9 +19,12 @@ interface LoginForm extends HTMLFormControlsCollection {
   passRepeat: HTMLInputElement;
 }
 
-const Login: FC<Props> = ({ open, setUser }) => {
+const Login: FC<Props> = ({ open }) => {
+  const { user, setUser } = useContext(AuthContext);
+
   const [error, setError] = useState<null | string>(null);
   const [showRegister, setShowRegister] = useState<boolean>(false);
+
   const ERRORS = {
     INVALID_INPUTS: "Niepoprawny email lub hasło.",
     IN_PROMISE_ERROR: "Wystąpił błąd. Spróbuj ponownie.",
