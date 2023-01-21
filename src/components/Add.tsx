@@ -1,13 +1,13 @@
 import { FC } from "react";
 import AddIcon from "@mui/icons-material/Add";
-import { Button, ButtonBase, IconButton } from "@mui/material";
+import { Button, ButtonBase, Fab, IconButton } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
 const Add: FC = () => {
   return (
-    <IconButton color="success" sx={{ position: "fixed", bottom: "30px", right: "50px" }}>
-      <AddCircleOutlineIcon sx={{ fontSize: 100 }} />
-    </IconButton>
+    <Fab color="success" sx={{ height: 100, width: 100, position: "fixed", bottom: "30px", right: "50px" }}>
+      <AddIcon />
+    </Fab>
   );
 };
 
