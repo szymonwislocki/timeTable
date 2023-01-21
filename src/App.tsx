@@ -9,6 +9,7 @@ import Login from "./components/Login";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import { AuthContext } from "./providers/auth";
+import Loader from "./components/Loader";
 
 function App() {
   const { user, setUser } = useContext(AuthContext);
@@ -20,14 +21,11 @@ function App() {
       u ? setUser(u.email) : setUser(null);
       setLoader(false);
     });
-    console.log("Effect fired");
   }, [user]);
 
   return (
     <>
-      <Backdrop sx={{ color: "#fff", zIndex: 2 }} open={loader}>
-        <CircularProgress color="inherit" />
-      </Backdrop>
+      <Loader loader={loader}/>
       <Login open={!Boolean(user) && !loader} />
       <Controlbar />
       <MainScreen />
