@@ -5,9 +5,10 @@ import { Alert, Box, Button, DialogTitle, IconButton, TextField, Typography } fr
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { AccountCircleSharp } from "@mui/icons-material";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
 import CloseIcon from "@mui/icons-material/Close";
 import { AuthContext } from "../providers/auth";
+import { addDoc, collection } from "firebase/firestore";
 
 interface Props {
   open: boolean;
@@ -49,7 +50,13 @@ const Login: FC<Props> = ({ open }) => {
 
       if (passRepeat === pass) {
         createUserWithEmailAndPassword(auth, email, pass)
-          .then(() => setUser(email))
+          .then(() => {
+            newUser(email)
+              .then(() => {
+                setUser(email);
+              })
+              .catch(() => setError(ERRORS.IN_PROMISE_ERROR));
+          })
           .catch(({ code }) => {
             switch (code) {
               case "auth/invalid-email":
@@ -94,6 +101,17 @@ const Login: FC<Props> = ({ open }) => {
           }
         });
     }
+  };
+
+  const newUser = async (email: string): Promise<void> => {
+    await addDoc(collection(db, "userConfig"), {
+      email: email,
+      currency: "",
+      rate: 0,
+      prevSum: 0,
+      beginOfPeriod: new Date().getTime(),
+      endOfPeriod: new Date().getTime() + 3600000 * 24 * 30,
+    });
   };
 
   return (
