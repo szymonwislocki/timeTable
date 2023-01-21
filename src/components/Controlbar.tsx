@@ -10,7 +10,7 @@ import { AuthContext } from "../providers/auth";
 const Controlbar: FC = () => {
   const { user, setUser } = useContext(AuthContext);
 
-  const [open, setOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState<boolean>(false);
 
   const handleLogOut = (): void => {
     signOut(auth);
@@ -26,10 +26,10 @@ const Controlbar: FC = () => {
         <Button onClick={handleLogOut} color="inherit" variant="outlined">
           <LoginIcon />
         </Button>
-        <Button onClick={() => setOpen(true)} sx={{ m: 1 }} color="inherit" variant="outlined">
+        <Button onClick={() => setSettingsOpen(true)} sx={{ m: 1 }} color="inherit" variant="outlined">
           <SettingsIcon />
         </Button>
-        <Settings open={open} setOpen={() => setOpen(false)} />
+        <Settings open={settingsOpen} setOpen={() => setSettingsOpen(false)} />
       </Toolbar>
     </AppBar>
   );
