@@ -1,7 +1,7 @@
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
 import { Box, Button, IconButton, InputLabel, MenuItem, Select, TextField } from "@mui/material";
-import { SetStateAction, useContext, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { UserDataContext } from "../providers/userData";
 import { Preview } from "@mui/icons-material";
 import { User } from "firebase/auth";
@@ -10,12 +10,12 @@ import { db } from "../firebase";
 import SaveIcon from "@mui/icons-material/Save";
 interface Props {
   open: boolean;
-  setOpen: (v: boolean) => void;
+  setOpen: Dispatch<boolean>;
 }
 
 const Settings: React.FC<Props> = ({ open, setOpen }) => {
   const {
-    userSettings: { currency, rate, id },
+    userSettings: { currency, rate, id, firstConfig },
     setUserSettings,
   } = useContext(UserDataContext);
 
@@ -25,6 +25,7 @@ const Settings: React.FC<Props> = ({ open, setOpen }) => {
     const docref = doc(db, "userConfig", `${id}`);
     if (action === currency) updateDoc(docref, { currency: currency });
     if (action === rate) updateDoc(docref, { rate: rate });
+    if (!firstConfig) updateDoc(docref, { firstConfig: true });
   };
 
   return (

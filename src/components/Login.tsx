@@ -108,7 +108,7 @@ const Login: FC<Props> = ({ open }) => {
     await setDoc(docReference, {
       email: email,
       currency: "PLN",
-      rate: 0,
+      rate: 20,
       prevSum: 0,
       beginOfPeriod: new Date().getTime(),
       endOfPeriod: new Date().getTime() + 3600000 * 24 * 30,

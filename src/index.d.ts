@@ -6,4 +6,5 @@ interface UserSettings {
   prevSum: number;
   rate: number;
   id: string;
+  firstConfig: boolean;
 }
