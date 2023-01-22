@@ -5,10 +5,10 @@ import { FC, useContext, useState } from "react";
 import Settings from "./Settings";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
-import { AuthContext } from "../providers/auth";
+import {  UserDataContext } from "../providers/userData";
 
 const Controlbar: FC = () => {
-  const { user, setUser } = useContext(AuthContext);
+  const { user, setUser } = useContext(UserDataContext);
 
   const [settingsOpen, setSettingsOpen] = useState<boolean>(false);
 

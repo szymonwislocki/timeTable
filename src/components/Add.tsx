@@ -5,7 +5,7 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
 const Add: FC = () => {
   return (
-    <Fab color="success" sx={{ height: 100, width: 100, position: "fixed", bottom: "30px", right: "50px" }}>
+    <Fab color="success" sx={{ height: 100, width: 100, position: "fixed", bottom: "30px", right: "50px", zIndex: 1 }}>
       <AddIcon />
     </Fab>
   );

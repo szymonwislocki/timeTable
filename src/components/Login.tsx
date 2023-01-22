@@ -7,8 +7,8 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { AccountCircleSharp } from "@mui/icons-material";
 import { auth, db } from "../firebase";
 import CloseIcon from "@mui/icons-material/Close";
-import { AuthContext } from "../providers/auth";
-import { addDoc, collection } from "firebase/firestore";
+import { UserDataContext } from "../providers/userData";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 
 interface Props {
   open: boolean;
@@ -21,10 +21,10 @@ interface LoginForm extends HTMLFormControlsCollection {
 }
 
 const Login: FC<Props> = ({ open }) => {
-  const { user, setUser } = useContext(AuthContext);
+  const { user, setUser } = useContext(UserDataContext);
 
   const [error, setError] = useState<null | string>(null);
-  const [showRegister, setShowRegister] = useState<boolean>(false);
+  const [showRegister, setShowRegister] = useState<boolean>(true);
 
   const ERRORS = {
     INVALID_INPUTS: "Niepoprawny email lub hasło.",
@@ -103,20 +103,22 @@ const Login: FC<Props> = ({ open }) => {
     }
   };
 
+  const docReference = doc(collection(db, "userConfig"));
   const newUser = async (email: string): Promise<void> => {
-    await addDoc(collection(db, "userConfig"), {
+    await setDoc(docReference, {
       email: email,
-      currency: "",
+      currency: "PLN",
       rate: 0,
       prevSum: 0,
       beginOfPeriod: new Date().getTime(),
       endOfPeriod: new Date().getTime() + 3600000 * 24 * 30,
+      id: docReference.id,
     });
   };
 
   return (
     <>
-      <Dialog open={open}>
+      <Dialog open={open} sx={{ backgroundColor: "rgba(0,0,0,0.3)", backdropFilter: "blur(4px)" }}>
         <Box onSubmit={handleSubmit} sx={{ width: 300, maxHeight: 330, display: "flex", flexDirection: "column", gap: 1, m: 1.5 }} component="form">
           <DialogTitle>{showRegister ? "Załóż nowe konto" : "Musisz się zalogować"}</DialogTitle>
           <TextField id="email" required label="Wprowadź e-mail" />
