@@ -8,3 +8,12 @@ interface UserSettings {
   id: string;
   firstConfig: boolean;
 }
+
+interface UserShift {
+  email: string;
+  id: string;
+  begin: string;
+  end: string;
+  date: string;
+  time: number;
+}

@@ -13,13 +13,21 @@ import Loader from "./components/Loader";
 import { collection, doc, DocumentData, getDocs, query, where } from "firebase/firestore";
 
 function App() {
-  const { user, setUser, setUserSettings } = useContext(UserDataContext);
+  const { user, setUser, setUserSettings, setUserShifts, userShifts } = useContext(UserDataContext);
 
   const [loader, setLoader] = useState(true);
 
   const getUserData = async (): Promise<void> => {
     const userSettings = await getDocs(query(collection(db, "userConfig"), where("email", "==", user)));
     userSettings.forEach((d: DocumentData) => setUserSettings(d.data()));
+    // const userShiftsData = await getDocs(query(collection(db, "shifts"), where("email", "==", user)));
+    // userShiftsData.forEach((d: DocumentData) => setUserShifts(d.data()));
+    // console.log(userShifts);
+    await getDocs(query(collection(db, "shifts"), where("email", "==", user))).then((q) => {
+      const shifts: UserShift[] = [];
+      q.forEach((d) => shifts.push(d.data() as UserShift));
+      setUserShifts(shifts);
+    });
   };
 
   useEffect(() => {
@@ -27,7 +35,7 @@ function App() {
       u ? setUser(u.email) : setUser(null);
       getUserData().then(() => setLoader(false));
     });
-  }, [user]);
+  }, [user, userShifts.length]);
 
   return (
     <>
