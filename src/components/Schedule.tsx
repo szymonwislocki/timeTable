@@ -11,9 +11,11 @@ interface Props {
   data: UserShift;
 }
 
-const Schedule: FC<Props> = ({ data }) => {
-  const { userSettings } = useContext(UserDataContext);
+String.prototype.splitToTime = function (n) {
+  return +this.split(":")[n];
+};
 
+const Schedule: FC<Props> = ({ data }) => {
   const { id, begin, end, date } = data;
 
   const handleDelete = async (): Promise<void> => {
@@ -22,14 +24,12 @@ const Schedule: FC<Props> = ({ data }) => {
     }
   };
 
-  const dates = { begin: [...begin.split(":").map(Number)], end: [...end.split(":").map(Number)] };
-
   const getHours = (start: any, end: any) => {
     const hoursinMs = 1000 * 60 * 60;
     return Math.round(Math.abs(end - start) / hoursinMs);
   };
 
-  const total = getHours(new Date(0, 0, 0, dates.begin[0], dates.begin[1], 0), new Date(0, 0, 0, dates.end[0], dates.end[1], 0));
+  const total = getHours(new Date(0, 0, 0, ...begin.split(":").map(Number), 0), new Date(0, 0, 0, ...end.split(":").map(Number), 0));
 
   return (
     <Card sx={{ m: 1, p: 1.5, display: "flex", justifyContent: "space-between" }}>
@@ -38,7 +38,7 @@ const Schedule: FC<Props> = ({ data }) => {
           {begin} – {end}
         </Typography>
         <Typography variant="subtitle2" component="span">
-          <CalendarMonthIcon sx={{ fontSize: 12 }} /> {date} {"   "}
+          <CalendarMonthIcon sx={{ fontSize: 12 }} /> {date.split("-").reverse().join("-")} {"   "}
           <AccessTimeIcon sx={{ fontSize: 12 }} /> {total} h{/* <PaidIcon sx={{ fontSize: 12 }} /> */}
         </Typography>
       </Box>
