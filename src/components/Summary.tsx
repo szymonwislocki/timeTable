@@ -4,19 +4,14 @@ import { UserDataContext } from "../providers/userData";
 
 const Summary: FC = () => {
   const { userSettings, userShifts } = useContext(UserDataContext);
-  console.log(userShifts);
-  let total = 0;
-  userShifts.map((v) => {
-    total += v.time;
-  });
-
+  const total = userShifts.reduce((a, b) => a + b.time, 0);
   return (
     <Card sx={{ p: 2 }}>
       <Typography variant="subtitle2" component="p">
         Liczba godzin przepracowanych w bieżącym okresie:
       </Typography>
       <Typography sx={{ textAlign: "center" }} variant="h4" component="p">
-        {userShifts.reduce((a, b) => a + b.time, 0)}
+        {total}
       </Typography>
       <Typography variant="subtitle2" component="p">
         Wypracowane wynagrodzenie za okres:

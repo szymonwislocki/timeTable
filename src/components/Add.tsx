@@ -5,6 +5,7 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { collection, doc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { UserDataContext } from "../providers/userData";
+import { BadgeOutlined } from "@mui/icons-material";
 
 const Add: FC = () => {
   const { user, userShifts, setUserShifts } = useContext(UserDataContext);
@@ -19,10 +20,12 @@ const Add: FC = () => {
   } as UserShift);
 
   const newShift = async (): Promise<void> => {
+    setShift((prev) => ({ ...prev, time: +shift.end.split(":")[0] - +shift.begin.split(":")[0] }));
     setUserShifts([...userShifts, shift]);
     await setDoc(docReference, { ...shift, email: user, id: docReference.id });
     setShowAddNew(false);
   };
+  // const total = getHours(new Date(0, 0, 0, ...begin.split(":").map(Number), 0), new Date(0, 0, 0, ...end.split(":").map(Number), 0));
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, action: string) => {
     setShift((prev) => ({ ...prev, [action]: e.currentTarget.value }));
