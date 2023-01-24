@@ -4,11 +4,10 @@ import { FormEvent, useState } from "react";
 import { Alert, Box, Button, DialogTitle, IconButton, TextField, Typography } from "@mui/material";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { AccountCircleSharp } from "@mui/icons-material";
 import { auth, db } from "../firebase";
 import CloseIcon from "@mui/icons-material/Close";
 import { UserDataContext } from "../providers/userData";
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import {  collection, doc, setDoc } from "firebase/firestore";
 
 interface Props {
   open: boolean;

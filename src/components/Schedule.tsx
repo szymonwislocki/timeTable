@@ -1,13 +1,12 @@
 import { Box, Card, IconButton, Typography } from "@mui/material";
 import { FC, useContext } from "react";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import PaidIcon from "@mui/icons-material/Paid";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { UserDataContext } from "../providers/userData";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
-import { EightK } from "@mui/icons-material";
+
 interface Props {
   data: UserShift;
 }
@@ -21,11 +20,6 @@ const Schedule: FC<Props> = ({ data }) => {
       setUserShifts(userShifts.filter((el) => el.id != id));
       await deleteDoc(doc(db, "shifts", id));
     }
-  };
-
-  const getHours = (start: any, end: any) => {
-    const hoursinMs = 1000 * 60 * 60;
-    return Math.round(Math.abs(end - start) / hoursinMs);
   };
 
   return (

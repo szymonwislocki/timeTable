@@ -1,4 +1,4 @@
-import { AppBar, Button, Icon, Toolbar, Typography } from "@mui/material";
+import { AppBar, Button,  Toolbar, Typography } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LoginIcon from "@mui/icons-material/Login";
 import { FC, useContext, useState } from "react";
@@ -8,7 +8,7 @@ import { auth } from "../firebase";
 import {  UserDataContext } from "../providers/userData";
 
 const Controlbar: FC = () => {
-  const { user, setUser } = useContext(UserDataContext);
+  const {  setUser } = useContext(UserDataContext);
 
   const [settingsOpen, setSettingsOpen] = useState<boolean>(false);
 

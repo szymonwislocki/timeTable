@@ -1,10 +1,8 @@
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
-import { Box, Button, IconButton, InputLabel, MenuItem, Select, TextField } from "@mui/material";
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { Box, Button, IconButton,  MenuItem, TextField } from "@mui/material";
+import { Dispatch,useContext } from "react";
 import { UserDataContext } from "../providers/userData";
-import { Preview } from "@mui/icons-material";
-import { User } from "firebase/auth";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import SaveIcon from "@mui/icons-material/Save";

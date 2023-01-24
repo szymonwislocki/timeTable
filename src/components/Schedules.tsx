@@ -1,5 +1,4 @@
-import { Card, Paper, Typography } from "@mui/material";
-import { DocumentData } from "firebase/firestore";
+import { Card,Typography } from "@mui/material";
 import { FC, useContext } from "react";
 import { UserDataContext } from "../providers/userData";
 import Schedule from "./Schedule";

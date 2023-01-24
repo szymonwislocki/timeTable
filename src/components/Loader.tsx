@@ -1,4 +1,4 @@
-import { Backdrop, CircularProgress, Paper } from "@mui/material";
+import { Backdrop, CircularProgress } from "@mui/material";
 import { FC } from "react";
 
 interface Props {

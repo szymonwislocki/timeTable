@@ -1,11 +1,8 @@
-import { ChangeEvent, FC, FormEvent, useContext, useState } from "react";
-import AddIcon from "@mui/icons-material/Add";
-import { Box, Button, ButtonBase, Dialog, DialogTitle, Fab, IconButton, TextField } from "@mui/material";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { ChangeEvent, FC,  useContext, useState } from "react";
+import { Box, Button,  Dialog, DialogTitle,  TextField } from "@mui/material";
 import { collection, doc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { UserDataContext } from "../providers/userData";
-import { BadgeOutlined } from "@mui/icons-material";
 interface Props {
   showAddNew: boolean;
   setShowAddNew: (v: boolean) => void;

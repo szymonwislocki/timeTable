@@ -1,11 +1,6 @@
-import { ChangeEvent, FC, FormEvent, useContext, useState } from "react";
+import { FC, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
-import { Box, Button, ButtonBase, Dialog, DialogTitle, Fab, IconButton, TextField } from "@mui/material";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { collection, doc, setDoc } from "firebase/firestore";
-import { db } from "../firebase";
-import { UserDataContext } from "../providers/userData";
-import { BadgeOutlined } from "@mui/icons-material";
+import { Fab } from "@mui/material";
 import AddDialog from "./AddDialog";
 
 const Add: FC = () => {
