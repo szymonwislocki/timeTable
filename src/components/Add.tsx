@@ -14,7 +14,7 @@ const Add: FC = () => {
   return (
     <>
       <AddDialog showAddNew={showAddNew} setShowAddNew={setShowAddNew} />
-      <Fab onClick={() => setShowAddNew(true)} color="success" sx={{ height: 100, width: 100, position: "fixed", bottom: "30px", right: "50px", zIndex: 1 }}>
+      <Fab onClick={() => setShowAddNew(true)} color="success" sx={{ height: "min(20vw, 120px)", width: "min(20vw, 120px)", position: "fixed", bottom: "30px", right: "50px", zIndex: 1 }}>
         <AddIcon />
       </Fab>
     </>
