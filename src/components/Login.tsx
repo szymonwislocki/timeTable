@@ -7,7 +7,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../firebase";
 import CloseIcon from "@mui/icons-material/Close";
 import { UserDataContext } from "../providers/userData";
-import {  collection, doc, setDoc } from "firebase/firestore";
+import { collection, doc, setDoc } from "firebase/firestore";
 
 interface Props {
   open: boolean;
@@ -103,15 +103,18 @@ const Login: FC<Props> = ({ open }) => {
   };
 
   const docReference = doc(collection(db, "userConfig"));
+
   const newUser = async (email: string): Promise<void> => {
+    const defTimeSpan = 30;
     await setDoc(docReference, {
       email: email,
       currency: "PLN",
       rate: 20,
       prevSum: 0,
       beginOfPeriod: new Date().getTime(),
-      endOfPeriod: new Date().getTime() + 3600000 * 24 * 30,
+      endOfPeriod: new Date().getTime() + 3600000 * 24 * defTimeSpan,
       id: docReference.id,
+      timeSpan: defTimeSpan,
     });
   };
 

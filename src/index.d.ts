@@ -7,6 +7,7 @@ interface UserSettings {
   rate: number;
   id: string;
   firstConfig: boolean;
+  timeSpan: number;
 }
 
 interface UserShift {

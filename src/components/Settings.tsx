@@ -1,9 +1,9 @@
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
-import { Box, Button, IconButton,  MenuItem, TextField } from "@mui/material";
-import { Dispatch,useContext } from "react";
+import { Box, Button, IconButton, MenuItem, TextField } from "@mui/material";
+import { Dispatch, useContext } from "react";
 import { UserDataContext } from "../providers/userData";
-import { doc, updateDoc } from "firebase/firestore";
+import { collection, deleteDoc, doc, query, setDoc, updateDoc, where } from "firebase/firestore";
 import { db } from "../firebase";
 import SaveIcon from "@mui/icons-material/Save";
 interface Props {
@@ -13,18 +13,33 @@ interface Props {
 
 const Settings: React.FC<Props> = ({ open, setOpen }) => {
   const {
-    userSettings: { currency, rate, id, firstConfig },
+    userSettings: { currency, rate, id, firstConfig, timeSpan },
     setUserSettings,
+    userShifts,
+    setUserShifts,
   } = useContext(UserDataContext);
 
-  const saveIconStyling = { position: "relative", top: 5, left: 5 };
+  const docref = doc(db, "userConfig", `${id}`);
 
   const handleSave = async (action: string | number): Promise<void> => {
-    const docref = doc(db, "userConfig", `${id}`);
     if (action === currency) updateDoc(docref, { currency: currency });
     if (action === rate) updateDoc(docref, { rate: rate });
+    if (action === timeSpan) updateDoc(docref, { timeSpan: timeSpan });
     if (!firstConfig) updateDoc(docref, { firstConfig: true });
   };
+
+  const handleSubtotal = async (): Promise<void> => {
+    if (window.confirm("Czy na pewno chcesz rozpocząć nowe rozliczenie? Wszystkie dodane zmiany zostaną usunięte, ale wyniki za cały poprzedni okres będą dostępne w historii.")) {
+      const total = userShifts.reduce((a, b) => a + b.time, 0);
+      for (let i = 0; i < userShifts.length; i++) {
+        await deleteDoc(doc(db, "shifts", userShifts[i].id));
+      }
+      await updateDoc(docref, { prevSum: total * rate, beginOfPeriod: new Date().getTime(), endOfPeriod: new Date().getTime() + 3600000 * 24 * timeSpan });
+      setUserShifts([]);
+    }
+  };
+
+  const saveIconStyling = { position: "relative", top: 5, left: 5 };
 
   return (
     <Dialog open={open} onClose={setOpen}>
@@ -46,7 +61,13 @@ const Settings: React.FC<Props> = ({ open, setOpen }) => {
             <SaveIcon />
           </IconButton>
         </Box>
-        <Button component="div" variant="outlined" color="error">
+        <Box>
+          <TextField sx={{ width: "80%" }} label={`Czas trwania rozliczenia (${timeSpan})`} type="number" value={timeSpan} onChange={(e) => setUserSettings((prev) => ({ ...prev, timeSpan: Math.abs(+e.target.value) }))} />
+          <IconButton onClick={() => handleSave(timeSpan)} sx={saveIconStyling} aria-label="save">
+            <SaveIcon />
+          </IconButton>
+        </Box>
+        <Button onClick={handleSubtotal} component="div" variant="outlined" color="error">
           Zamknij okres
         </Button>
       </Box>

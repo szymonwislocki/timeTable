@@ -3,7 +3,10 @@ import { FC, useContext } from "react";
 import { UserDataContext } from "../providers/userData";
 
 const Summary: FC = () => {
-  const { userSettings, userShifts } = useContext(UserDataContext);
+  const {
+    userSettings: { rate },
+    userShifts,
+  } = useContext(UserDataContext);
   const total = userShifts.reduce((a, b) => a + b.time, 0);
   return (
     <Card sx={{ p: 2 }}>
@@ -17,7 +20,7 @@ const Summary: FC = () => {
         Wypracowane wynagrodzenie za okres:
       </Typography>
       <Typography sx={{ textAlign: "center" }} variant="h4" component="p">
-        {total * userSettings.rate}
+        {total && rate && total * rate}
       </Typography>
     </Card>
   );
