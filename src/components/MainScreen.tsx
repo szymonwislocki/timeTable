@@ -2,6 +2,7 @@ import { Grid } from "@mui/material";
 import { FC, useContext } from "react";
 import { UserDataContext } from "../providers/userData";
 import Hello from "./Hello";
+import History from "./History";
 import Reminder from "./Reminder";
 import Schedules from "./Schedules";
 import Summary from "./Summary";
@@ -21,8 +22,13 @@ const MainScreen: FC = () => {
         <Grid item xs={12} md={6}>
           <Schedules />
         </Grid>
-        <Grid item xs={12} md={6}>
-          <Summary />
+        <Grid item container spacing={2} xs={12} md={6}>
+          <Grid item xs={12}>
+            <Summary />
+          </Grid>
+          <Grid item xs={12}>
+            <History />
+          </Grid>
         </Grid>
       </Grid>
     </>

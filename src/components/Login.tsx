@@ -110,7 +110,7 @@ const Login: FC<Props> = ({ open }) => {
       email: email,
       currency: "PLN",
       rate: 20,
-      prevSum: 0,
+      prevPeriod: [] as PreviousPeriodData[],
       beginOfPeriod: new Date().getTime(),
       endOfPeriod: new Date().getTime() + 3600000 * 24 * defTimeSpan,
       id: docReference.id,

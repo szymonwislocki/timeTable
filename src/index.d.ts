@@ -3,7 +3,7 @@ interface UserSettings {
   endOfPeriod: number;
   currency: string;
   email: string;
-  prevSum: number;
+  prevPeriod: PreviousPeriodData[];
   rate: number;
   id: string;
   firstConfig: boolean;
@@ -17,4 +17,11 @@ interface UserShift {
   end: string;
   date: string;
   time: number;
+}
+
+interface PreviousPeriodData {
+  begin: number;
+  end: number;
+  prevSum: number;
+  hoursWorked: number;
 }

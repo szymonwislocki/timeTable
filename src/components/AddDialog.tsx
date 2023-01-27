@@ -1,5 +1,5 @@
-import { ChangeEvent, FC,  useContext, useState } from "react";
-import { Box, Button,  Dialog, DialogTitle,  TextField } from "@mui/material";
+import { ChangeEvent, FC, useContext, useState } from "react";
+import { Box, Button, Dialog, DialogTitle, TextField } from "@mui/material";
 import { collection, doc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { UserDataContext } from "../providers/userData";
@@ -19,9 +19,8 @@ const AddDialog: FC<Props> = ({ showAddNew, setShowAddNew }) => {
   } as UserShift);
 
   const newShift = async (): Promise<void> => {
-    setShift((prev) => ({ ...prev, time: +shift.end.split(":")[0] - +shift.begin.split(":")[0] }));
     setUserShifts([...userShifts, shift]);
-    await setDoc(docReference, { ...shift, email: user, id: docReference.id });
+    await setDoc(docReference, { ...shift, email: user, id: docReference.id, time: Math.round(Math.abs(+new Date(0, 0, 0, ...shift.begin.split(":").map(Number), 0) - +new Date(0, 0, 0, ...shift.end.split(":").map(Number), 0)) / 3600000) });
     setShowAddNew(false);
   };
 

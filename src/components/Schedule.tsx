@@ -29,7 +29,7 @@ const Schedule: FC<Props> = ({ data }) => {
           {begin} – {end}
         </Typography>
         <Typography variant="subtitle2" component="span">
-          <CalendarMonthIcon sx={{ fontSize: 12 }} /> {date.split("-").reverse().join("-")} {"   "}
+          <CalendarMonthIcon sx={{ fontSize: 12 }} /> {date.split("-").reverse().join("/")} {"   "}
           <AccessTimeIcon sx={{ fontSize: 12 }} /> {time} h{/* <PaidIcon sx={{ fontSize: 12 }} /> */}
         </Typography>
       </Box>

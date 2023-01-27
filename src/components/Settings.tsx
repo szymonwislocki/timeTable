@@ -13,7 +13,7 @@ interface Props {
 
 const Settings: React.FC<Props> = ({ open, setOpen }) => {
   const {
-    userSettings: { currency, rate, id, firstConfig, timeSpan },
+    userSettings: { currency, rate, id, firstConfig, timeSpan, prevPeriod, beginOfPeriod, endOfPeriod },
     setUserSettings,
     userShifts,
     setUserShifts,
@@ -26,16 +26,30 @@ const Settings: React.FC<Props> = ({ open, setOpen }) => {
     if (action === rate) updateDoc(docref, { rate: rate });
     if (action === timeSpan) updateDoc(docref, { timeSpan: timeSpan });
     if (!firstConfig) updateDoc(docref, { firstConfig: true });
+    setUserSettings((p) => ({ ...p, firstConfig: true }));
   };
 
   const handleSubtotal = async (): Promise<void> => {
     if (window.confirm("Czy na pewno chcesz rozpocząć nowe rozliczenie? Wszystkie dodane zmiany zostaną usunięte, ale wyniki za cały poprzedni okres będą dostępne w historii.")) {
       const total = userShifts.reduce((a, b) => a + b.time, 0);
+      await updateDoc(docref, {
+        prevPeriod: [
+          ...prevPeriod,
+          {
+            prevSum: total * rate,
+            hoursWorked: total,
+            begin: beginOfPeriod,
+            end: endOfPeriod,
+          } as PreviousPeriodData,
+        ],
+        beginOfPeriod: new Date().getTime(),
+        endOfPeriod: new Date().getTime() + 3600000 * 24 * timeSpan,
+      });
       for (let i = 0; i < userShifts.length; i++) {
         await deleteDoc(doc(db, "shifts", userShifts[i].id));
       }
-      await updateDoc(docref, { prevSum: total * rate, beginOfPeriod: new Date().getTime(), endOfPeriod: new Date().getTime() + 3600000 * 24 * timeSpan });
       setUserShifts([]);
+      setOpen(false);
     }
   };
 

@@ -1,4 +1,4 @@
-import { Card,Typography } from "@mui/material";
+import { Card, Typography } from "@mui/material";
 import { FC, useContext } from "react";
 import { UserDataContext } from "../providers/userData";
 import Schedule from "./Schedule";
@@ -9,7 +9,7 @@ const Schedules: FC = () => {
 
   return (
     <>
-      <Card sx={{ p: 1 }}>
+      <Card sx={{ p: 1, maxHeight: "50vh", overflowY: "scroll" }}>
         <Typography component="div" variant="h5">
           Twoje przepracowane dni.
         </Typography>
