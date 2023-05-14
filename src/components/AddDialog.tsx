@@ -20,6 +20,7 @@ const AddDialog: FC<Props> = ({ showAddNew, setShowAddNew }) => {
 
   const newShift = async (): Promise<void> => {
     setUserShifts([...userShifts, shift]);
+    //@down: XDDDD
     const time = Math.round(Math.abs(+new Date(0, 0, 0, ...shift.begin.split(":").map(Number), 0) - +new Date(0, 0, 0, ...shift.end.split(":").map(Number), 0)) / 3600000);
     await setDoc(docReference, { ...shift, email: user, id: docReference.id, time: time });
     setShowAddNew(false);
